@@ -1,5 +1,5 @@
 pipeline{
-    agent none
+    agent any
 
     tools {
          maven 'maven'
@@ -20,7 +20,7 @@ pipeline{
         }
         stage('deploy'){
             steps{
-               bat 'mvn deploy'
+               sh 'mvn deploy'
             }
         }
     }
