@@ -3,18 +3,24 @@ pipeline{
 
     tools {
          maven 'maven'
-         jdk 'java'
+         jdk 'JDK8'
     }
 
     stages{
         stage('checkout'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/sreenivas449/java-hello-world-with-maven.git']]])
-            }
+            steps
+	         {
+                // clone code from a GitHub repository
+                git url: 'https://github.com/Neelam-zanvar/java-hello-world-with-maven.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean test package"
+
+             }
         }
-        stage('build'){
+        stage('deploy'){
             steps{
-               bat 'mvn package'
+               bat 'mvn deploy'
             }
         }
     }
